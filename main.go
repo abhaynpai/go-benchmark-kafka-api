@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/abhaynpai/go-test-kafka.git/producer"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -18,12 +18,18 @@ type Payload struct {
 func main() {
 	fmt.Println("Its working!")
 
+	err := producer.InitKafka("localhost:9092")
+
+	if err != nil {
+		panic(err)
+	}
+
 	e := echo.New()
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	e.POST("/", sayHello)
+	e.POST("/produce", sayHello)
 
 	e.Logger.Fatal(e.Start(":1234"))
 }
@@ -33,19 +39,16 @@ func sayHello(c echo.Context) error {
 
 	if err := c.Bind(p); err != nil {
 		log.Println(err)
+		c.Error(err)
 		return err
 	}
 
-	k, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "localhost:9092"})
+	err := producer.Produce(p.Topic, p.Message)
 
 	if err != nil {
-		panic(err)
+		c.Error(err)
+		return err
 	}
-
-	k.Produce(&kafka.Message{
-		TopicPartition: kafka.TopicPartition{Topic: &p.Topic, Partition: kafka.PartitionAny},
-		Value:          []byte(p.Message),
-	}, nil)
 
 	return c.JSON(200, p)
 }
