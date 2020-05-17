@@ -18,7 +18,9 @@ type Payload struct {
 func main() {
 	fmt.Println("Its working!")
 
-	err := producer.InitKafka("localhost:9092")
+	p, err := producer.InitKafka("localhost:9092")
+
+	defer p.Close()
 
 	if err != nil {
 		panic(err)

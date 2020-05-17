@@ -9,12 +9,12 @@ import (
 var producer *kafka.Producer
 
 // InitKafka initialises kafka setup
-func InitKafka(broker string) error {
+func InitKafka(broker string) (*kafka.Producer, error) {
 	var err error
 	producer, err = kafka.NewProducer(&kafka.ConfigMap{
 		"bootstrap.servers": broker,
 	})
-	return err
+	return producer, err
 }
 
 // Produce messages into kafka
