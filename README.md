@@ -10,7 +10,7 @@ PRs are always welcome for benchmarking and improving the code.
 
 ## Getting started
 
-First of all you need Go and Kafka to be installed on your local machine. Before you start make sure you have Kafka running on your local machine. The next step would be to clone the repository and run the following commands within the `go-test-kafka-api` repository.
+First of all you need Go and Kafka to be installed on your local machine. Before you start make sure you have Kafka running on your local machine. The next step would be to clone the repository and run the following commands within the `go-benchmark-kafka-api` repository.
 
 ```shell
 go build main.go
