@@ -14,5 +14,16 @@ First of all you need Go and Kafka to be installed on your local machine. Before
 
 ```shell
 go build main.go
-./main localhost:9092 test_group test_topic
+./main
+```
+
+Now to call the API you can use any tool right from JMeter or write down your own script in any language. A simple `curl` command to invoke this API is as follows
+
+```shell
+curl --location --request POST 'http://localhost:1234/produce' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"topic": "test_topic",
+	"message": "Man what up!"
+}'
 ```
