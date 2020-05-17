@@ -1,4 +1,4 @@
-module github.com/abhaynpai/go-test-kafka.git
+module github.com/abhaynpai/go-benchmark-kafka-api
 
 go 1.14
 
