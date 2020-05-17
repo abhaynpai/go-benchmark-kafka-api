@@ -29,12 +29,12 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	e.POST("/produce", sayHello)
+	e.POST("/produce", produce)
 
 	e.Logger.Fatal(e.Start(":1234"))
 }
 
-func sayHello(c echo.Context) error {
+func produce(c echo.Context) error {
 	p := new(Payload)
 
 	if err := c.Bind(p); err != nil {
